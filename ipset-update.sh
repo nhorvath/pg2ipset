@@ -38,7 +38,7 @@ ENABLE_BLUETACK=1
 ENABLE_COUNTRY=0
 
 # enable tor blocks?
-ENABLE_TORBLOCK=1
+ENABLE_TORBLOCK=0
 
 #cache a copy of the iptables rules
 IPTABLES=$(iptables-save)
