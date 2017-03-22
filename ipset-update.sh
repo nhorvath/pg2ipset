@@ -3,6 +3,12 @@
 # ipset-update.sh (C) 2012-2015 Matt Parnell http://www.mattparnell.com
 # Licensed under the GNU-GPLv2+
 
+if [ -f /etc/iblocklist.creds ] ; then
+  source /etc/iblocklist.creds
+else 
+  IBL_CREDS=""
+fi
+
 # place to keep our cached blocklists
 LISTDIR="/var/cache/blocklists"
 
@@ -81,7 +87,7 @@ if [ $ENABLE_BLUETACK = 1 ]; then
   # pg2ipset to be inserted
   i=0
   for list in ${BLUETACK[@]}; do  
-	if [ eval $(wget --quiet -O /tmp/${BLUETACKALIAS[i]}.gz http://list.iblocklist.com/?list=$list&fileformat=p2p&archiveformat=gz) ]; then
+	if [ eval $(wget --quiet -O /tmp/${BLUETACKALIAS[i]}.gz http://list.iblocklist.com/?list=$list&fileformat=p2p&archiveformat=gz$IBL_CREDS) ]; then
 	  mv /tmp/${BLUETACKALIAS[i]}.gz $LISTDIR/${BLUETACKALIAS[i]}.gz
 	else
 	  echo "Using cached list for ${BLUETACKALIAS[i]}."
